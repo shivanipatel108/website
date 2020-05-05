@@ -1,0 +1,143 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, fig.align = "center", warning = F, message = F,
+                      tidy=TRUE, tidy.opts=list(width.cutoff=60), R.options=list(max.print=100))
+```
+
+###Project 1
+
+###Shivani Patel sjp2742
+
+When searching for datasets to join for this project, I was looking for some that related to my current interests and curiosities. I came across one dataset that I really liked, and that related to what I am doing in my life right now- medical school applications. I found this particular dataset through the following website: https://vincentarelbundock.github.io/Rdatasets/datasets.html. This dataset contains information relating to MCAT scores, college GPAs, and medical school acceptances for about 55 separate students. 
+
+The Accept variable shows if a student was accepted or denied form medical school, and the Acceptance variable does this in numeric form. The Sex variable shows if a student was female or male, the Apps variable shows how many apps each student submitted, and the ID variable shows the student ID’s that I made in the excel sheet prior to reading it into R Studio. The BCPM variable shows college science GPA’s, and the GPA variable shows overall GPA. The MCAT variable shows individual MCAT scores, and the VR, PS, WS, and BS variables show the different individual section scores of the MCAT for each student. Overall, I expect all GPA types to be higher for individuals with higher MCAT and MCAT subsection scores. I also expect the scores, acceptances, apps, and GPAs to be similar for both genders.
+
+### 1:
+```{R}
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+
+Comp_Bio_MedGPA <-read.csv("ShivCompBio.csv")
+
+data("Comp_Bio_MedGPA")
+glimpse(Comp_Bio_MedGPA)
+
+Comp_Bio_MedGPA%>%pivot_wider(names_from="Sex", values_from="MCAT")%>%pivot_longer(c("M","F"), names_to="Sex", values_to="MCAT")%>%na.omit()%>%glimpse()
+
+compbiogpa <-Comp_Bio_MedGPA%>%select(ID, GPA, BCPM, Sex)%>%distinct()
+glimpse(compbiogpa)
+
+compbiomcat <-Comp_Bio_MedGPA%>%select(ID, Accept, Acceptance, VR, PS, WS, BS, MCAT, Apps)%>%distinct()
+glimpse(compbiomcat)
+```
+
+I chose to break the dataset that I found and really liked into two separate datasets, and then rejoin them. My dataset was already tidy when I found it, so I made it untidy using pivot_wider, and then tidy again using pivot_longer, followed by na.omit to get rid of NAs. I then broke my dataset into two separate ones, both with the “ID” column in common.
+
+### 2:
+```{R}
+Comp_Bio_MedGPA_Edits <- compbiogpa %>% full_join(compbiomcat) %>% glimpse()
+```
+
+I used a full_join to join the two separated datasets by “ID”, as I did not want to lose any columns or add any NAs.
+
+No cases were dropped in either dataset.
+
+### 3:
+```{R}
+Comp_Bio_MedGPA_Edits %>% select(Accept,GPA)%>% filter(Accept=="A", GPA==max(GPA))%>%glimpse()
+
+Comp_Bio_MedGPA_Edits <- Comp_Bio_MedGPA_Edits %>% arrange(desc(BS)) %>% mutate(BS_Percent=BS/MCAT*100)%>%glimpse()
+
+Comp_Bio_MedGPA_Edits %>% summarize(mean(WS), sd(WS))
+
+Comp_Bio_MedGPA_Edits %>% summarize(n_distinct(MCAT))
+
+Comp_Bio_MedGPA_Edits %>% summarize(mean(VR),sd(VR), IQR(VR))
+
+Comp_Bio_MedGPA_Edits %>% summarize(mad(PS), median(PS))
+
+Comp_Bio_MedGPA_Edits %>% group_by(Accept) %>% summarize(max_Apps=max(Apps))%>%glimpse()
+
+Comp_Bio_MedGPA_Edits %>% group_by(Sex) %>% summarize(min_BS=min(BS))%>%glimpse()
+
+Comp_Bio_MedGPA_Edits %>% group_by(Accept,Sex) %>% summarize(n=n())
+
+Comp_Bio_MedGPA_Edits %>% group_by(Accept) %>% summarize(var_GPA_BCPM=var(GPA,BCPM))%>%glimpse()
+
+
+Correlation_Matrix<-Comp_Bio_MedGPA_Edits%>%select_if(is.numeric)
+
+cor(Correlation_Matrix)%>%glimpse()
+```
+
+When selecting Accept (categorical) and GPA, and filtering by only accepted students and max GPA, I found that the two students with 3.97 max GPAs were both accepted to medical schools. When arranging by descending BS scores, and using mutate to create the variable BS_Percent which showed BS score percentage of MCAT score, I found that the BS Percentage overall decreased as BS decreased. When summarizing the mean and standard deviation of WS scores, I found that the mean was 7.15 and standard deviation was 1.61. When summarizing the number of distinct MCAT scores, I found that it was 14 scores. When summarizing the mean, standard deviation, and inter quartile range of VR scores, I found them to be 9.81, 1.76, and 2.75 respectively. When summarizing the mad and median of PS scores, I found them to be 1.48 and 10 respectively.
+
+When grouping by Accept (categorical) and summarizing the max apps submitted, I found that for accepted students the maximum number of apps submitted was 19, and for denied students the number was 24. When grouping by Sex (categorical) and summarizing the minimum BS score, I found that for females, the minimum BS score was 8, and for males it was 6. When grouping by Accept (categorical) and Sex (categorical), and summarizing the number of each (n), I found that there were 18 accepted females, 12 accepted males, 10 denied females, and 14 denied males. When grouping by Accept (categorical) and summarizing the variance of GPA and BCPM, I found the variance to be around 0.056 for accepted individuals, and 0.072 for denied individuals. I further went on to make a correlation matrix of my numerical variables. One interesting thing that I noticed was that the number of apps had a negative correlation with all other numeric variables besides itself.
+
+### 4:
+```{R}
+Comp_Bio_MedGPA_Edits%>%select_if(is.numeric)%>%cor%>%as.data.frame%>%
+  rownames_to_column%>%pivot_longer(-1)%>%
+  ggplot(aes(rowname,name,fill=value))+geom_tile()+
+  geom_text(aes(label=round(value,2)))+
+  xlab("")+ylab("")
+
+
+ggplot(Comp_Bio_MedGPA_Edits, aes(x = Sex, y = MCAT, fill=Accept))+
+  geom_bar(stat="summary",fun.y="mean", position="dodge")+
+  scale_y_continuous(breaks=seq(0, 40, 5))+
+  geom_errorbar(stat="summary",position="dodge", col=c("white"))+
+  ggtitle("Average MCAT vs. Sex for Accepted/Denied Statuses")+ylab("Average MCAT")+
+  labs(fill = "Status")+theme_dark()
+
+
+ggplot(Comp_Bio_MedGPA_Edits, aes(BS, BCPM, color=GPA))+geom_point()+
+  ggtitle("BCPM GPAs vs. BS Scores Corresponding with GPAs")+ylab("BCPM GPA")+xlab("BS Score")+theme_bw()+
+  scale_color_gradient(low="navy blue", high="pink")
+```
+
+I made a correlation heatmap of all of my numeric variables. This showed the relative correlations of all of the variables with each other, using a lighter shade of blue for stronger correlations, and a darker shade for weaker correlations. It seems as though there is a relatively strong correlation between MCAT scores and MCAT sub-section scores, as well as between GPA and Science GPA (BCPM).
+
+I made a side-by-side bar chat with standard error bars, which showed relationship between average MCAT scores and sex for accepted/denied students. It showed that on average, accepted males performed better on the MCAT than accepted females did. However, it also showed that denied males and females performed relatively similarly on the MCAT as each other. 
+
+I made a scatterplot, which showed the relationship between BCPM GPAs of students and their BS component scores, in relation to their overall GPAs. It showed that the higher the overall GPAs, the higher the BS scores were, and the higher the BCPM GPAs were. All three of the variables seemed to have a direct positive correlation.
+
+### 5:
+```{R}
+Comp_Bio_MedGPA_Edits<-Comp_Bio_MedGPA_Edits%>%select(-ID)
+Comp_Bio_Nums<-Comp_Bio_MedGPA_Edits%>%select_if(is.numeric)%>%scale
+Comp_Bio_PCA<-princomp(Comp_Bio_Nums)
+names(Comp_Bio_PCA)
+
+summary(Comp_Bio_PCA, loadings=T)
+EigVal<-Comp_Bio_PCA$sdev^2
+EigVal
+
+Comp_Bio_df1<-data.frame(PC1=Comp_Bio_PCA$scores[, 1], PC2=Comp_Bio_PCA$scores[, 2])
+ggplot(Comp_Bio_df1, aes(PC1, PC2)) + geom_point()
+
+Comp_Bio_PCA$loadings[1:10, 1:2] %>% as.data.frame %>% rownames_to_column %>%
+  ggplot() + geom_hline(aes(yintercept=0), lty=2) +
+  geom_vline(aes(xintercept=0), lty=2) + ylab("PC2") + xlab("PC1") +
+  geom_segment(aes(x=0, y=0, xend=Comp.1, yend=Comp.2), arrow=arrow(), col="red")+
+  geom_label(aes(x=Comp.1*1.1, y=Comp.2*1.1, label=rowname))
+
+Comp_Bio_df2<-data.frame(PC2=Comp_Bio_PCA$scores[, 2], PC3=Comp_Bio_PCA$scores[, 3])
+ggplot(Comp_Bio_df2, aes(PC2, PC3)) + geom_point()
+
+Comp_Bio_PCA$loadings[1:10, 2:3] %>% as.data.frame %>% rownames_to_column %>%
+  ggplot() + geom_hline(aes(yintercept=0), lty=2) +
+  geom_vline(aes(xintercept=0), lty=2) + ylab("PC3") + xlab("PC2") +
+  geom_segment(aes(x=0, y=0, xend=Comp.2, yend=Comp.3), arrow=arrow(), col="red")+
+  geom_label(aes(x=Comp.2*1.1, y=Comp.3*1.1, label=rowname))
+```
+
+In this dimensionality reduction step, I cleaned my data by removing the ID variable, normalized my data by scaling it, ran princomp, and then summarized my results. After squaring standard deviations to obtain eigenvalues, I decided on how many principal components to keep. I used Kaiser’s rule, and since the 4th component would have had a value less than 1 when squared, I used 3 principal components. These 3 components counted for 71.6% of the variance. A high score on PC1 corresponded with more apps submitted, and lower MCAT score, GPAs, and acceptances. A high score on PC2 corresponded with higher GPAs and acceptances, and overall lower MCAT scores and subscores not including BS. A high score on PC3 corresponded with higher GPAs, acceptances, and apps submitted, and lower MCAT scores and subscores in general.
+
+I then went on to make scatterplots and loadings plots for PC1 and PC2, as well as PC2 and PC3. For the PC1 and PC2 plots, this showed a strong correlation as seen by smaller angles between both types of GPAs and BS/acceptance, and a weak correlation between both types of GPAs and BS percentage. It also showed a stronger correlation between MCAT and PS vs. between MCAT and VR and WS. For the PC2 and PC3 plots, this showed a strong correlation between both types of GPAs, and between MCAT and WS scores. It also showed a weak correlation between apps submitted and VR/PS scores, and between BS scores and BS percentage. All of these results made sense in context of medical school acceptance statistics.
+
