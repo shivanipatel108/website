@@ -1,0 +1,10 @@
+---
+title: R and Python Usage
+author: Shivani Patel
+date: '2020-05-12'
+slug: r-and-python-usage
+categories: []
+tags: []
+description: ''
+---
+feoifj
