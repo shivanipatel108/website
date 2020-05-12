@@ -2,6 +2,7 @@
 output:
   pdf_document: default
   html_document: default
+  showpagemeta: false
 ---
 
 
@@ -148,7 +149,7 @@ mean(new[new$pros.eet==1,]$pros.age)}
 {hist(rand_dist,main=&quot;&quot;,ylab=&quot;&quot;); abline(v = 0.642,col=&quot;red&quot;)}</code></pre>
 <p><img src="/project2_files/figure-html/unnamed-chunk-2-1.png" width="768" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>mean(rand_dist&gt;0.642)*2</code></pre>
-<pre><code>## [1] 0.5968</code></pre>
+<pre><code>## [1] 0.568</code></pre>
 <p>I performed a randomization test on my two variables, age and eet. The null hypothesis was that mean age is the same for people both having early endocrine therapy (eet), and not having it. The alternative hypothesis was that mean age is different for people having eet and not having eet. I found that the true mean difference between the two means was around 0.642. I then computed a p-value on the randomization distribution, which corresponds to the probability of observing a mean difference as extreme as the original data mean difference. I obtained a p-value of 0.586. Since this number is not less than 0.05, the null hypothesis was accepted, meaning that mean age is the same for people both having eet and not having eet. In the plot to visualize the null distribution and the test statistic, I found that my test statistic layed slightly to the right of the middle of the null distribution, but only by a small amount.</p>
 </div>
 <div id="section-3" class="section level3">
