@@ -13,7 +13,17 @@
   </url>
   
   <url>
+    <loc>/blog/</loc>
+    <lastmod>2020-05-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/</loc>
+    <lastmod>2020-05-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/r-and-python-usage/</loc>
     <lastmod>2020-05-14T00:00:00+00:00</lastmod>
   </url>
   
@@ -40,16 +50,6 @@
   <url>
     <loc>/tags/</loc>
     <lastmod>2020-05-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/blog/</loc>
-    <lastmod>2020-05-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/blog/r-and-python-usage/</loc>
-    <lastmod>2020-05-12T00:00:00+00:00</lastmod>
   </url>
   
 </urlset>
