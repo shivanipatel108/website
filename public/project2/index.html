@@ -72,11 +72,8 @@
               
 
 
-<div id="section" class="section level3">
-<h3>0:</h3>
 <p>The dataset I chose for this project contains information relating to prostate cancer diagnostics and treatments for 134 separate patients. The numeric variables include pgtime, age, g2, grade, and gleason. The pgtime variable shows time to progression of cancer or last follow up in years, the age variable shows the patients’ ages in years, the g2 variable shows the percentage of cancer cells in the G2 phase of the cell cycle as found by flow cytometry, the grade variable shows the grade of the tumor in the Farrow system, and the gleason variable shows the grade of the tumor in the Gleason system. There is one categorical variable, ploidy, which indicates the ploidy status of the tumor (diploid, tetraploid, or aneuploid). Lastly, there are two binary variables, pgstat and eet. The pgstat variable shows whether progression was observed or censored, and the eet variable shows if there was early endocrine therapy or not.</p>
-</div>
-<div id="section-1" class="section level3">
+<div id="section" class="section level3">
 <h3>1:</h3>
 <pre class="r"><code>library(tidyverse)
 library(ggplot2)
@@ -187,7 +184,7 @@ summary(manova1)</code></pre>
 <p>After adjusting with the boneferroni adjusted significance level of 0.0038, I found that neither of the ploidys significantly differed from one another in terms of grade, diploid/tetraploid still significantly differed from one another in terms of gleason, and aneuploid/tetraploid and diploid/tetraploid still significantly differed from one another in terms of g2. I performed 13 tests in total, including 1 MANOVA, 3 ANOVAs, and 9 t tests. The probability of getting at least one type-I error if unadjusted was around 48.67%.</p>
 <p>The MANOVA and ANOVA random samples/independent observations assumption was probably met, as this dataset was random and seemed to have relatively independent observations. The MANOVA multivariate normality was likely met as each group had n=25+, but the ANOVA normal distribution assumption was likely not met, as I suspect not all groups had a normal distribution. The MANOVA homogeneity assumption was likely not met as there probably wasn’t equal covariance between any 2 DVs, and the ANOVA equal variance assumption was also likely not met within each of my groups. The MANOVA linear relationships assumptions was likely not met among all of my variables, the no extreme outliers assumption was also likely not met as I spotted a few outliers in my data, and the no multicollinearity assumption was also likey violated as I suspect some of my DVs were pretty correlated.</p>
 </div>
-<div id="section-2" class="section level3">
+<div id="section-1" class="section level3">
 <h3>2:</h3>
 <pre class="r"><code>rand &lt;- data.frame(prostate$eet, prostate$age)
 glimpse(rand)</code></pre>
@@ -212,10 +209,10 @@ mean(new[new$pros.eet==1,]$pros.age)}
 {hist(rand_dist,main=&quot;&quot;,ylab=&quot;&quot;); abline(v = 0.642,col=&quot;red&quot;)}</code></pre>
 <p><img src="/project2_files/figure-html/unnamed-chunk-2-1.png" width="768" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>mean(rand_dist&gt;0.642)*2</code></pre>
-<pre><code>## [1] 0.5884</code></pre>
+<pre><code>## [1] 0.5804</code></pre>
 <p>I performed a randomization test on my two variables, age and eet. The null hypothesis was that mean age is the same for people both having early endocrine therapy (eet), and not having it. The alternative hypothesis was that mean age is different for people having eet and not having eet. I found that the true mean difference between the two means was around 0.642. I then computed a p-value on the randomization distribution, which corresponds to the probability of observing a mean difference as extreme as the original data mean difference. I obtained a p-value of 0.586. Since this number is not less than 0.05, the null hypothesis was accepted, meaning that mean age is the same for people both having eet and not having eet. In the plot to visualize the null distribution and the test statistic, I found that my test statistic layed slightly to the right of the middle of the null distribution, but only by a small amount.</p>
 </div>
-<div id="section-3" class="section level3">
+<div id="section-2" class="section level3">
 <h3>3:</h3>
 <pre class="r"><code>prostate$gleason_c &lt;- prostate$gleason - mean(prostate$gleason)
 fitproject2&lt;-lm(g2 ~ gleason_c*pgstat, data=prostate)
@@ -310,7 +307,7 @@ head(bogusproj2,3)</code></pre>
 <p>I then plotted the regression using ggplot, and checked assumptions of linearity, normality, and homoskedasticity graphically. I found that the normality assumption was met, the homoskedasticity assumption was not met, and the linearity assumption was met for most of the data, except a small part as seen at the right end of the graph where points curved up instead of staying in a line.</p>
 <p>After recomputing regression results with robust standard errors, I found that the estimates stayed almost exactly the same, but standard errors for gleason_c and gleason_c:pgstat increased, and standard error for pgstat decreased only slightly. This increase is because heteroskedasticity was accounted for with the robust standard errors. The p-values decreased for all variables, but gleason_c stayed the only significant p-value for both tests, and t-values both increased and decreased depending on the variable. All of the changes observed in this second regression with robust standard errors display that heteroskedasticity was accounted for. Lastly, I calculated R^2 to be around 0.066, which showed that my model explained 6.6% of variation in the outcome. The adjusted R^2 was around 0.029 (2.9%), which just accounted for penalty to mitigate chance association.</p>
 </div>
-<div id="section-4" class="section level3">
+<div id="section-3" class="section level3">
 <h3>4:</h3>
 <pre class="r"><code>fitproject2&lt;-lm(g2 ~ gleason_c*pgstat, data=prostate)
 
@@ -352,7 +349,7 @@ samp_distn_proj2%&gt;%t%&gt;%as.data.frame%&gt;%summarize_all(sd)</code></pre>
 ## 1    1.118507 0.8918377 1.451441         1.435813</code></pre>
 <p>After rerunning the same linear regression model with interaction as before, I computed bootstrapped standard errors. The bootstrapped SE and p-value for gleason_c were higher than normal values and lower than robust values, the bootstraped SE and p-value for pgstat were lower than robust values which were lower than normal values, and the bootstrapped SE and p-value for gleason_c:pgstat were higher than normal values and lower than robust values.</p>
 </div>
-<div id="section-5" class="section level3">
+<div id="section-4" class="section level3">
 <h3>5:</h3>
 <pre class="r"><code>class_diag&lt;-function(probs,truth){
   
@@ -466,7 +463,7 @@ summarize_all(diagscvproj2,mean)</code></pre>
 <p>I ran a logistic regression model without interaction predicting the binary categorical variable pgstat from grade and age. I then changed the log-odds scaled coefficients to odds scaled coefficients, and proceeded to interpret these new coeffeficients. The intercept of around 0.022 showed that when both grade and age are 0, the odds of a patient having observed progression is 0.022. The grade coefficient showed that when age is controlled for, for every 1 unit increase in grade, the odds of having observed progression is multiplied by around 6.70. The age coefficient showed that when grade is controlled for, for every 1 unit increase in age, the odds of having observed progression is multiplied by around 0.97. I then proceeded to make a confusion matrix in order to calculate accuracy to be around 0.664, TPR to be around 0.531, TNR to be around 0.741, and PPV to be around 0.542.</p>
 <p>Next, I plotted density of log-ods (logit) by pgstat, and then generated an ROC curve through which I was able to calculate an AUC of around 0.742. This AUC, which was calculated through the ROC curve, is considered fair. Lastly, I performed a 10-fold CV, and found that the average out-of-sample Accuracy was around 0.643, Sensitivity was around 0.5, and Recall was around 0.6.</p>
 </div>
-<div id="section-6" class="section level3">
+<div id="section-5" class="section level3">
 <h3>6:</h3>
 <pre class="r"><code>#install.packages(&quot;glmnet&quot;)
 library(glmnet)

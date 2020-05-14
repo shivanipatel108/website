@@ -26,7 +26,7 @@
       <pubDate>Thu, 14 May 2020 00:00:00 +0000</pubDate>
       
       <guid>/project2/</guid>
-      <description>0: The dataset I chose for this project contains information relating to prostate cancer diagnostics and treatments for 134 separate patients. The numeric variables include pgtime, age, g2, grade, and gleason. The pgtime variable shows time to progression of cancer or last follow up in years, the age variable shows the patients’ ages in years, the g2 variable shows the percentage of cancer cells in the G2 phase of the cell cycle as found by flow cytometry, the grade variable shows the grade of the tumor in the Farrow system, and the gleason variable shows the grade of the tumor in the Gleason system.</description>
+      <description>The dataset I chose for this project contains information relating to prostate cancer diagnostics and treatments for 134 separate patients. The numeric variables include pgtime, age, g2, grade, and gleason. The pgtime variable shows time to progression of cancer or last follow up in years, the age variable shows the patients’ ages in years, the g2 variable shows the percentage of cancer cells in the G2 phase of the cell cycle as found by flow cytometry, the grade variable shows the grade of the tumor in the Farrow system, and the gleason variable shows the grade of the tumor in the Gleason system.</description>
     </item>
     
     <item>
