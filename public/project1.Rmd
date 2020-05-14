@@ -1,4 +1,5 @@
 ---
+title: 'Project 1'
 date: '2020-05-14'
 output:
   pdf_document: default
@@ -9,9 +10,6 @@ knitr::opts_chunk$set(echo = TRUE, eval = TRUE, fig.align = "center", warning = 
                       tidy=TRUE, tidy.opts=list(width.cutoff=60), R.options=list(max.print=100))
 ```
 
-###Project 1
-
-###Shivani Patel sjp2742
 
 When searching for datasets to join for this project, I was looking for some that related to my current interests and curiosities. I came across one dataset that I really liked, and that related to what I am doing in my life right now- medical school applications. I found this particular dataset through the following website: https://vincentarelbundock.github.io/Rdatasets/datasets.html. This dataset contains information relating to MCAT scores, college GPAs, and medical school acceptances for about 55 separate students. 
 

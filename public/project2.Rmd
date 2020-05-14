@@ -1,4 +1,5 @@
 ---
+title: 'Project 2'
 date: '2020-05-14'
 output:
   pdf_document: default
@@ -22,10 +23,6 @@ knitr::opts_chunk$set(echo = TRUE, eval = TRUE,fig.align="center",warning=FALSE,
 options(tibble.width = 100,width = 100)
 library(tidyverse)
 ```
-
-###Project 2
-
-###Shivani Patel sjp2742
 
 
 ### 0:

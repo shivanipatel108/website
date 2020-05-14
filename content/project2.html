@@ -1,15 +1,13 @@
 ---
+title: 'Project 2'
 date: '2020-05-14'
 output:
   pdf_document: default
   html_document: default
-  showpagemeta: false
 ---
 
 
 
-<p>###Project 2</p>
-<p>###Shivani Patel sjp2742</p>
 <div id="section" class="section level3">
 <h3>0:</h3>
 <p>The dataset I chose for this project contains information relating to prostate cancer diagnostics and treatments for 134 separate patients. The numeric variables include pgtime, age, g2, grade, and gleason. The pgtime variable shows time to progression of cancer or last follow up in years, the age variable shows the patients’ ages in years, the g2 variable shows the percentage of cancer cells in the G2 phase of the cell cycle as found by flow cytometry, the grade variable shows the grade of the tumor in the Farrow system, and the gleason variable shows the grade of the tumor in the Gleason system. There is one categorical variable, ploidy, which indicates the ploidy status of the tumor (diploid, tetraploid, or aneuploid). Lastly, there are two binary variables, pgstat and eet. The pgstat variable shows whether progression was observed or censored, and the eet variable shows if there was early endocrine therapy or not.</p>
@@ -150,7 +148,7 @@ mean(new[new$pros.eet==1,]$pros.age)}
 {hist(rand_dist,main=&quot;&quot;,ylab=&quot;&quot;); abline(v = 0.642,col=&quot;red&quot;)}</code></pre>
 <p><img src="/project2_files/figure-html/unnamed-chunk-2-1.png" width="768" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>mean(rand_dist&gt;0.642)*2</code></pre>
-<pre><code>## [1] 0.568</code></pre>
+<pre><code>## [1] 0.5884</code></pre>
 <p>I performed a randomization test on my two variables, age and eet. The null hypothesis was that mean age is the same for people both having early endocrine therapy (eet), and not having it. The alternative hypothesis was that mean age is different for people having eet and not having eet. I found that the true mean difference between the two means was around 0.642. I then computed a p-value on the randomization distribution, which corresponds to the probability of observing a mean difference as extreme as the original data mean difference. I obtained a p-value of 0.586. Since this number is not less than 0.05, the null hypothesis was accepted, meaning that mean age is the same for people both having eet and not having eet. In the plot to visualize the null distribution and the test statistic, I found that my test statistic layed slightly to the right of the middle of the null distribution, but only by a small amount.</p>
 </div>
 <div id="section-3" class="section level3">
