@@ -6,24 +6,15 @@
     <description>Recent content on Portfolio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Tue, 12 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>R and Python Usage</title>
-      <link>/blog/r-and-python-usage/</link>
-      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/r-and-python-usage/</guid>
-      <description>feoifj</description>
-    </item>
-    
-    <item>
       <title></title>
       <link>/project1/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 14 May 2020 00:00:00 +0000</pubDate>
       
       <guid>/project1/</guid>
       <description>###Project 1
@@ -34,7 +25,7 @@ When searching for datasets to join for this project, I was looking for some tha
     <item>
       <title></title>
       <link>/project2/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 14 May 2020 00:00:00 +0000</pubDate>
       
       <guid>/project2/</guid>
       <description>###Project 2
@@ -45,13 +36,22 @@ When searching for datasets to join for this project, I was looking for some tha
     <item>
       <title>Projects</title>
       <link>/projects/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 13 May 2020 00:00:00 +0000</pubDate>
       
       <guid>/projects/</guid>
       <description>Projects Here are some projects I have recently completed:
   Exploratory Data Analysis with Tidyverse Tools
   Modeling, Testing, and Classification
   </description>
+    </item>
+    
+    <item>
+      <title>R and Python Usage</title>
+      <link>/blog/r-and-python-usage/</link>
+      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/r-and-python-usage/</guid>
+      <description> #install.packages(&amp;quot;reticulate&amp;quot;) library(reticulate) corona &amp;lt;-&amp;quot;Support essential workers&amp;quot; corona=&amp;quot;during the COVID-19 pandemic!&amp;quot; print(r.corona,corona) ## Support essential workers during the COVID-19 pandemic! cat(c(corona,py$corona)) ## Support essential workers during the COVID-19 pandemic! </description>
     </item>
     
   </channel>
