@@ -9,7 +9,11 @@ description: ''
 ---
 ## Reticulate 
 
-Have you ever wondered how to combine two coding languages? One easy way is to use reticulate. It lets R and Python to be used right from R markdown through separate R chunks and Python chunks! Below I have demonstrated a simple usage of the reticulate function. 
+Have you ever wondered how to combine two coding languages? One easy way is to use reticulate. It lets R and Python to be used right from R markdown through separate R chunks and Python chunks! I have demonstrated a simple usage of the reticulate function in this blog post. The following image obtained from rstudio.github.io shows how R chunks differ from python chunks in R markdown (disregard the code). 
+
+
+![](/blog/2020-05-12-r-and-python-usage_files/r python pic.png)
+
 
 In an R code chunk, I have named an object as "corona".
 ```{R}
@@ -20,6 +24,7 @@ corona <-"Support essential workers"
 
 ```
 
+
 In a Python code chunk, I named a different object "corona" as well. When printing both in Python, the objects form a full message. The R object is detected by using "r." before the object name.
 ```{python}
 corona="during the COVID-19 pandemic!"
@@ -27,10 +32,12 @@ print(r.corona,corona)
 
 ```
 
+
 The objects can form the same message when used in R as well. In this case, the Python object is detected by using "py$" before the object name.
 ```{R}
 cat(c(corona,py$corona))
 
 ```
+
 
 Now we can read the full (and very important) message that I coded through both R and Python- "Support essential workers during the COVID-19 pandemic!" Try it out for yourself!
