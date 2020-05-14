@@ -39,7 +39,7 @@ When searching for datasets to join for this project, I was looking for some tha
       <pubDate>Thu, 14 May 2020 00:00:00 +0000</pubDate>
       
       <guid>/blog/r-and-python-usage/</guid>
-      <description>Reticulate Have you ever wondered how to combine two coding languages? One easy way is to use reticulate. It lets R and Python to be used right from R markdown through separate R chunks and Python chunks! I have demonstrated a simple usage of the reticulate function in this blog post. The following image obtained from rstudio.github.io shows how R chunks differ from python chunks in R markdown (disregard the code).</description>
+      <description>Reticulate Have you ever wondered how to combine two different coding languages? One easy way is to use reticulate. It lets R and Python to be used right from R markdown through separate R chunks and Python chunks! I have demonstrated a simple usage of the reticulate function in this blog post. The following image obtained from rstudio.github.io shows how R chunks differ from python chunks in R markdown (disregard the code).</description>
     </item>
     
     <item>
