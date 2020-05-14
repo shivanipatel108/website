@@ -1,9 +1,8 @@
 ---
+date: '2020-05-14'
 output:
   pdf_document: default
   html_document: default
-  showpagemeta: false
-  date: '2020-05-13'
 ---
 ```{r setup, include=FALSE}
 library(knitr)
